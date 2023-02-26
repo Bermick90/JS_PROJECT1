@@ -12,6 +12,8 @@ const expensesList = document.getElementById('expensesList');
 const expenseCash = document.getElementById('expensesValue');
 // Balance
 const BalanceValue = document.getElementById('budgetValue');
+// Buttons
+const allButtons = document.querySelectorAll('.button-test');
 
 // arrays
 const incomesArr = [];
@@ -34,18 +36,16 @@ const addIncome = () => {
   incomesArr.push(newItem);
   renderIncomes();
 
-  refreshSum(newItem); //
+  refreshSum(newItem.amount); //
 };
 
-/////
-const refreshSum = (item) => {
+const refreshSum = (value) => {
   incomesCash.innerHTML = '';
-  Cash += parseFloat(incomeValue.value);
+  Cash += parseFloat(value);
   calcBalance();
   incomesCash.innerHTML = Cash;
 };
 
-////
 incomeForm.addEventListener('submit', (event) => {
   event.preventDefault();
   addIncome();
@@ -53,29 +53,74 @@ incomeForm.addEventListener('submit', (event) => {
 
 const createElement = (item) => {
   const listItem = document.createElement('li');
+  listItem.id = item.id; //
+  listItem.classList = 'flex flex--space-between budget__list__item'; //
   const text = document.createElement('p');
-  const amount = document.createElement('p');
   text.innerText = item.title;
+  const amount = document.createElement('p');
+  const buttonEdit = document.createElement('button'); //
+  buttonEdit.innerText = 'Edytuj'; //
+  const buttonRemove = document.createElement('button'); //
+  buttonRemove.innerText = 'Usuń'; //
+
   amount.innerText = item.amount;
-  //   <p>wypłata</p>
-  //   <p>5000</p>
 
   listItem.appendChild(text);
   listItem.appendChild(amount);
-  // <li>
-  //   <p>wypłata</p>
-  //   <p>5000</p>
-  // </li>
+  listItem.appendChild(buttonEdit); //
+  listItem.appendChild(buttonRemove); //
   incomesList.appendChild(listItem);
+
+  buttonEdit.addEventListener('click', () => {
+    //
+    editItem(item, text, listItem); //
+  });
+
+  buttonRemove.addEventListener('click', () => {
+    //
+    removeItem(item); //
+  }); //
+};
+const editItem = (item, text, listItem) => {
+  console.log(incomesArr);
+  listItem.contentEditable = true;
+  const editForm = document.createElement('form');
+  editForm.classList = 'budget__list__item_edit';
+  const titleInput = document.createElement('input');
+  const valueInput = document.createElement('input');
+  valueInput.setAttribute('type', 'number');
+  valueInput.setAttribute('min', 1);
+  titleInput.value = item.title;
+  valueInput.value = item.amount;
+  const saveBtn = document.createElement('input');
+  saveBtn.type = 'submit';
+  saveBtn.value = 'SAVE';
+  editForm.appendChild(titleInput);
+  editForm.appendChild(valueInput);
+  editForm.appendChild(saveBtn);
+  incomesList.appendChild(editForm);
+
+  saveBtn.addEventListener('click', () => {
+    incomesArr.find((element) => {
+      if (element.id === item.id) {
+        refreshSum(valueInput.value - element.amount);
+        element.title = titleInput.value;
+        element.amount = valueInput.value;
+      }
+    });
+
+    renderIncomes();
+  });
 };
 
+/////////////////////////////////////////////////////////////////
 const renderIncomes = () => {
   incomesList.innerHTML = '';
-  console.log(incomesArr);
   incomesArr.forEach((item) => {
     createElement(item);
   });
 };
+
 ////////////////////////////////EXPENSES
 const addExpense = () => {
   const newItem = {
@@ -85,11 +130,9 @@ const addExpense = () => {
   };
   expensesArr.push(newItem);
   renderExpenses();
-
   refreshExpensesSum(newItem); //
 };
 
-/////
 const refreshExpensesSum = (item) => {
   expenseCash.innerHTML = '';
   Outgoes += parseFloat(expenseValue.value);
@@ -97,7 +140,6 @@ const refreshExpensesSum = (item) => {
   expenseCash.innerHTML = Outgoes;
 };
 
-////
 expenseForm.addEventListener('submit', (event) => {
   event.preventDefault();
   addExpense();
@@ -109,15 +151,8 @@ const createElementExpense = (item) => {
   const amount = document.createElement('p');
   text.innerText = item.title;
   amount.innerText = item.amount;
-  //   <p>wypłata</p>
-  //   <p>5000</p>
-
   listItem.appendChild(text);
   listItem.appendChild(amount);
-  // <li>
-  //   <p>wypłata</p>
-  //   <p>5000</p>
-  // </li>
   expensesList.appendChild(listItem);
 };
 
@@ -128,6 +163,7 @@ const renderExpenses = () => {
     createElementExpense(item);
   });
 };
+
 ////////////////////////////////BALANCE
 const calcBalance = () => {
   Balance = Cash - Outgoes;
@@ -149,6 +185,14 @@ const calcBalance = () => {
   BalanceValue.innerHTML = info + ' ' + Balance + ' ' + 'PLN';
 };
 
+const removeItem = (element) => {
+  const indexToRemove = incomesArr.findIndex(
+    (item) => item.id === element.id
+  );
+  incomesArr.splice(indexToRemove, 1);
+  renderIncomes();
+  refreshSum(0 - element.amount);
+};
 //case
 
 //METODY FOREACH I MAP
