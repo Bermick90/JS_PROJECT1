@@ -174,10 +174,10 @@ const calcBalance = () => {
 
       break;
     case Balance < 0:
-      info = 'balans jest ujemny';
+      info = 'bilans jest ujemny';
       break;
     default:
-      info = 'balans wynosi zero';
+      info = 'bilans wynosi zero';
   }
 
   BalanceValue.innerHTML = '';
