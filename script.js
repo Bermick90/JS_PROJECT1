@@ -40,8 +40,10 @@ const addIncome = () => {
 };
 
 const refreshSum = (value) => {
-  incomesCash.innerHTML = '';
-  cash += parseFloat(value);
+  cash = incomesArr.reduce(
+    (prevVal, currValue) => prevVal + currValue.amount,
+    0
+  );
   calcBalance();
   incomesCash.innerHTML = cash;
 };
@@ -99,12 +101,13 @@ const editItem = (item, text, listItem) => {
   editForm.appendChild(saveBtn);
   incomesList.appendChild(editForm);
 
-  saveBtn.addEventListener('click', () => {
+  editForm.addEventListener('submit', (event) => {
+    event.preventDefault();
     incomesArr.find((element) => {
       if (element.id === item.id) {
-        refreshSum(valueInput.value - element.amount);
         element.title = titleInput.value;
-        element.amount = valueInput.value;
+        element.amount = Number(valueInput.value);
+        refreshSum(valueInput.value - element.amount);
       }
     });
 
@@ -185,7 +188,7 @@ const createElementExpense = (itemE) => {
 const editItemE = (itemE, text, listItemE) => {
   listItemE.contentEditable = true;
   const editFormE = document.createElement('form');
-  editFormE.classList = 'budget__list__item_editE';
+  editFormE.classList = 'budget__list__item_edit';
   const titleInputE = document.createElement('input');
   const valueInputE = document.createElement('input');
   valueInputE.setAttribute('type', 'number');
@@ -200,13 +203,13 @@ const editItemE = (itemE, text, listItemE) => {
   editFormE.appendChild(saveBtnE);
   expensesList.appendChild(editFormE);
 
-  saveBtnE.addEventListener('submit', (event) => {
+  editFormE.addEventListener('submit', (event) => {
     event.preventDefault();
     expensesArr.find((elementE) => {
       if (elementE.id === itemE.id) {
-        refreshExpensesSum(valueInputE.value - elementE.amountE);
         elementE.title = titleInputE.value;
-        elementE.amount = valueInputE.value;
+        elementE.amount = Number(valueInputE.value);
+        refreshExpensesSum(valueInputE.value - elementE.amountE);
       }
     });
 
