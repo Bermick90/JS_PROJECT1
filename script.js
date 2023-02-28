@@ -36,7 +36,7 @@ const addIncome = () => {
   incomesArr.push(newItem);
   renderIncomes();
 
-  refreshSum(newItem.amount); //
+  refreshSum(newItem.amount);
 };
 
 const refreshSum = (value) => {
@@ -55,33 +55,31 @@ incomeForm.addEventListener('submit', (event) => {
 
 const createElement = (item) => {
   const listItem = document.createElement('li');
-  listItem.id = item.id; //
-  listItem.classList = 'flex flex--space-between budget__list__item'; //
+  listItem.id = item.id;
+  listItem.classList = 'flex flex--space-between budget__list__item';
   const text = document.createElement('p');
   text.innerText = item.title;
   const amount = document.createElement('p');
-  const buttonEdit = document.createElement('button'); //
-  buttonEdit.innerText = 'Edytuj'; //
-  const buttonRemove = document.createElement('button'); //
-  buttonRemove.innerText = 'Usuń'; //
+  const buttonEdit = document.createElement('button');
+  buttonEdit.innerText = 'Edytuj';
+  const buttonRemove = document.createElement('button');
+  buttonRemove.innerText = 'Usuń';
 
   amount.innerText = item.amount;
 
   listItem.appendChild(text);
   listItem.appendChild(amount);
-  listItem.appendChild(buttonEdit); //
-  listItem.appendChild(buttonRemove); //
+  listItem.appendChild(buttonEdit);
+  listItem.appendChild(buttonRemove);
   incomesList.appendChild(listItem);
 
   buttonEdit.addEventListener('click', () => {
-    //
-    editItem(item, text, listItem); //
+    editItem(item, text, listItem);
   });
 
   buttonRemove.addEventListener('click', () => {
-    //
-    removeItem(item); //
-  }); //
+    removeItem(item);
+  });
 };
 const editItem = (item, text, listItem) => {
   listItem.contentEditable = true;
@@ -132,59 +130,57 @@ const addExpense = () => {
   };
   expensesArr.push(newItemE);
   renderExpenses();
-  refreshExpensesSum(newItemE); //
+  refreshExpensesSum(newItemE.amountE);
 };
-//OK
+
 const refreshExpensesSum = (item) => {
   expenseCash.innerHTML = '';
-  outgoes += parseFloat(expenseValue.value);
+  outgoes += parseFloat(item);
   calcBalance();
   expenseCash.innerHTML = outgoes;
 };
 const refreshExpensesDelete = (item) => {
   expenseCash.innerHTML = '';
+
   outgoes -= parseFloat(item);
+
   calcBalance();
   expenseCash.innerHTML = outgoes;
 };
-
-//OK
 
 expenseForm.addEventListener('submit', (event) => {
   event.preventDefault();
   addExpense();
 });
-//OK
+
 const createElementExpense = (itemE) => {
   const listItemE = document.createElement('li');
-  listItemE.idE = itemE.id; //
-  listItemE.classList = 'flex flex--space-between budget__list__item'; //
+  listItemE.idE = itemE.id;
+  listItemE.classList = 'flex flex--space-between budget__list__item';
   const textE = document.createElement('p');
   textE.innerText = itemE.titleE;
   const amountE = document.createElement('p');
-  const buttonEditE = document.createElement('button'); //
-  buttonEditE.innerText = 'Edytuj'; //
-  const buttonRemoveE = document.createElement('button'); //
-  buttonRemoveE.innerText = 'Usuń'; //
+  const buttonEditE = document.createElement('button');
+  buttonEditE.innerText = 'Edytuj';
+  const buttonRemoveE = document.createElement('button');
+  buttonRemoveE.innerText = 'Usuń';
 
   amountE.innerText = itemE.amountE;
   listItemE.appendChild(textE);
   listItemE.appendChild(amountE);
-  listItemE.appendChild(buttonEditE); //
-  listItemE.appendChild(buttonRemoveE); //
+  listItemE.appendChild(buttonEditE);
+  listItemE.appendChild(buttonRemoveE);
   expensesList.appendChild(listItemE);
 
   buttonEditE.addEventListener('click', () => {
-    //
-    editItemE(itemE, textE, listItemE); //
+    editItemE(itemE, textE, listItemE);
   });
 
   buttonRemoveE.addEventListener('click', () => {
-    //
-    removeItemE(itemE); //
-  }); //
+    removeItemE(itemE);
+  });
 };
-//OK
+
 const editItemE = (itemE, text, listItemE) => {
   listItemE.contentEditable = true;
   const editFormE = document.createElement('form');
@@ -207,9 +203,9 @@ const editItemE = (itemE, text, listItemE) => {
     event.preventDefault();
     expensesArr.find((elementE) => {
       if (elementE.id === itemE.id) {
-        elementE.title = titleInputE.value;
-        elementE.amount = Number(valueInputE.value);
         refreshExpensesSum(valueInputE.value - elementE.amountE);
+        elementE.title = titleInputE.value;
+        elementE.amountE = Number(valueInputE.value);
       }
     });
 
