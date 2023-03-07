@@ -183,21 +183,25 @@ const createElementExpense = (itemE) => {
 
 const editItemE = (itemE, text, listItemE) => {
   listItemE.contentEditable = true;
-  const editFormE = document.createElement('form');
-  editFormE.classList = 'budget__list__item_edit';
-  const titleInputE = document.createElement('input');
-  const valueInputE = document.createElement('input');
-  valueInputE.setAttribute('type', 'number');
-  valueInputE.setAttribute('min', 1);
-  titleInputE.value = itemE.titleE;
-  valueInputE.value = itemE.amountE;
-  const saveBtnE = document.createElement('input');
-  saveBtnE.type = 'submit';
-  saveBtnE.value = 'SAVE';
-  editFormE.appendChild(titleInputE);
-  editFormE.appendChild(valueInputE);
-  editFormE.appendChild(saveBtnE);
-  expensesList.appendChild(editFormE);
+  const formEdit = document.getElementById('Div1');
+  if (formEdit === undefined) {
+    const editFormE = document.createElement('form');
+    editFormE.setAttribute('id', 'Div1');
+    editFormE.classList = 'budget__list__item_edit';
+    const titleInputE = document.createElement('input');
+    const valueInputE = document.createElement('input');
+    valueInputE.setAttribute('type', 'number');
+    valueInputE.setAttribute('min', 1);
+    titleInputE.value = itemE.titleE;
+    valueInputE.value = itemE.amountE;
+    const saveBtnE = document.createElement('input');
+    saveBtnE.type = 'submit';
+    saveBtnE.value = 'SAVE';
+    editFormE.appendChild(titleInputE);
+    editFormE.appendChild(valueInputE);
+    editFormE.appendChild(saveBtnE);
+    expensesList.appendChild(editFormE);
+  }
 
   editFormE.addEventListener('submit', (event) => {
     event.preventDefault();
