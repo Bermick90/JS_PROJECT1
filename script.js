@@ -242,8 +242,6 @@ const calcBalance = () => {
       info = 'bilans wynosi zero';
   }
 
-  balanceValue.innerHTML = '';
-
   balanceValue.innerHTML = info + ' ' + balance + ' ' + 'PLN';
 };
 
