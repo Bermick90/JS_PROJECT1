@@ -83,11 +83,10 @@ const createElement = (item) => {
 };
 const editItem = (item, text, listItem) => {
   const formEditI = document.getElementById('Inc');
-  console.log(formEditI);
   if (formEditI === null) {
     listItem.contentEditable = true;
     const editForm = document.createElement('form');
-    editForm.setAttribute('id', 'Exp');
+    editForm.setAttribute('id', 'Inc');
     editForm.classList = 'budget__list__item_edit';
     const titleInput = document.createElement('input');
     const valueInput = document.createElement('input');
@@ -176,7 +175,6 @@ const createElementExpense = (itemE) => {
   listItemE.appendChild(buttonEditE);
   listItemE.appendChild(buttonRemoveE);
   expensesList.appendChild(listItemE);
-  console.log(itemE);
   buttonEditE.addEventListener('click', () => {
     editItemE(itemE, textE, listItemE);
   });
@@ -189,7 +187,6 @@ const createElementExpense = (itemE) => {
 const editItemE = (itemE, text, listItemE) => {
   listItemE.contentEditable = true;
   const formEdit = document.getElementById('Exp');
-  console.log(formEdit);
   if (formEdit === null) {
     const editFormE = document.createElement('form');
     editFormE.setAttribute('id', 'Exp');
