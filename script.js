@@ -82,35 +82,40 @@ const createElement = (item) => {
   });
 };
 const editItem = (item, text, listItem) => {
-  listItem.contentEditable = true;
-  const editForm = document.createElement('form');
-  editForm.classList = 'budget__list__item_edit';
-  const titleInput = document.createElement('input');
-  const valueInput = document.createElement('input');
-  valueInput.setAttribute('type', 'number');
-  valueInput.setAttribute('min', 1);
-  titleInput.value = item.title;
-  valueInput.value = item.amount;
-  const saveBtn = document.createElement('input');
-  saveBtn.type = 'submit';
-  saveBtn.value = 'SAVE';
-  editForm.appendChild(titleInput);
-  editForm.appendChild(valueInput);
-  editForm.appendChild(saveBtn);
-  incomesList.appendChild(editForm);
+  const formEditI = document.getElementById('Inc');
+  console.log(formEditI);
+  if (formEditI === null) {
+    listItem.contentEditable = true;
+    const editForm = document.createElement('form');
+    editForm.setAttribute('id', 'Exp');
+    editForm.classList = 'budget__list__item_edit';
+    const titleInput = document.createElement('input');
+    const valueInput = document.createElement('input');
+    valueInput.setAttribute('type', 'number');
+    valueInput.setAttribute('min', 1);
+    titleInput.value = item.title;
+    valueInput.value = item.amount;
+    const saveBtn = document.createElement('input');
+    saveBtn.type = 'submit';
+    saveBtn.value = 'SAVE';
+    editForm.appendChild(titleInput);
+    editForm.appendChild(valueInput);
+    editForm.appendChild(saveBtn);
+    incomesList.appendChild(editForm);
 
-  editForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    incomesArr.find((element) => {
-      if (element.id === item.id) {
-        element.title = titleInput.value;
-        element.amount = Number(valueInput.value);
-        refreshSum(valueInput.value - element.amount);
-      }
+    editForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      incomesArr.find((element) => {
+        if (element.id === item.id) {
+          element.title = titleInput.value;
+          element.amount = Number(valueInput.value);
+          refreshSum(valueInput.value - element.amount);
+        }
+      });
+
+      renderIncomes();
     });
-
-    renderIncomes();
-  });
+  }
 };
 
 /////////////////////////////////////////////////////////////////
@@ -183,10 +188,11 @@ const createElementExpense = (itemE) => {
 
 const editItemE = (itemE, text, listItemE) => {
   listItemE.contentEditable = true;
-  const formEdit = document.getElementById('Div1');
-  if (formEdit === undefined) {
+  const formEdit = document.getElementById('Exp');
+  console.log(formEdit);
+  if (formEdit === null) {
     const editFormE = document.createElement('form');
-    editFormE.setAttribute('id', 'Div1');
+    editFormE.setAttribute('id', 'Exp');
     editFormE.classList = 'budget__list__item_edit';
     const titleInputE = document.createElement('input');
     const valueInputE = document.createElement('input');
@@ -201,20 +207,20 @@ const editItemE = (itemE, text, listItemE) => {
     editFormE.appendChild(valueInputE);
     editFormE.appendChild(saveBtnE);
     expensesList.appendChild(editFormE);
-  }
 
-  editFormE.addEventListener('submit', (event) => {
-    event.preventDefault();
-    expensesArr.find((elementE) => {
-      if (elementE.idE === itemE.idE) {
-        refreshExpensesSum(valueInputE.value - elementE.amountE);
-        elementE.titleE = titleInputE.value;
-        elementE.amountE = Number(valueInputE.value);
-      }
+    editFormE.addEventListener('submit', (event) => {
+      event.preventDefault();
+      expensesArr.find((elementE) => {
+        if (elementE.idE === itemE.idE) {
+          refreshExpensesSum(valueInputE.value - elementE.amountE);
+          elementE.titleE = titleInputE.value;
+          elementE.amountE = Number(valueInputE.value);
+        }
+      });
+
+      renderExpenses();
     });
-
-    renderExpenses();
-  });
+  }
 };
 const renderExpenses = () => {
   expensesList.innerHTML = '';
