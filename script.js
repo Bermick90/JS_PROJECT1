@@ -18,7 +18,7 @@ const allButtons = document.querySelectorAll('.button-test');
 // arrays
 const incomesArr = [];
 const expensesArr = [];
-
+//
 //vars
 let cash = 0; //
 let outgoes = 0;
@@ -155,7 +155,7 @@ expenseForm.addEventListener('submit', (event) => {
 
 const createElementExpense = (itemE) => {
   const listItemE = document.createElement('li');
-  listItemE.idE = itemE.id;
+  listItemE.idE = itemE.idE;
   listItemE.classList = 'flex flex--space-between budget__list__item';
   const textE = document.createElement('p');
   textE.innerText = itemE.titleE;
@@ -171,7 +171,7 @@ const createElementExpense = (itemE) => {
   listItemE.appendChild(buttonEditE);
   listItemE.appendChild(buttonRemoveE);
   expensesList.appendChild(listItemE);
-
+  console.log(itemE);
   buttonEditE.addEventListener('click', () => {
     editItemE(itemE, textE, listItemE);
   });
@@ -202,9 +202,9 @@ const editItemE = (itemE, text, listItemE) => {
   editFormE.addEventListener('submit', (event) => {
     event.preventDefault();
     expensesArr.find((elementE) => {
-      if (elementE.id === itemE.id) {
+      if (elementE.idE === itemE.idE) {
         refreshExpensesSum(valueInputE.value - elementE.amountE);
-        elementE.title = titleInputE.value;
+        elementE.titleE = titleInputE.value;
         elementE.amountE = Number(valueInputE.value);
       }
     });
