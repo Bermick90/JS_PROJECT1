@@ -11,7 +11,7 @@ let currencyPLN;
 resultValue.innerHTML = ' XXX PLN';
 
 function getCurrencies() {
-  fetch('http://api.nbp.pl/api/exchangerates/tables/A/')
+  fetch('https://api.nbp.pl/api/exchangerates/tables/A/')
     .then((response) => response.json())
     .then((data) => {
       currencies = data[0].rates;
