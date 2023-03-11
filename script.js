@@ -18,7 +18,7 @@ function getCurrencies() {
     });
 }
 document.addEventListener('DOMContentLoaded', getCurrencies);
-
+//
 function convertCurrency() {
   currencies.forEach((item) => {
     if (item.code === currency_select.value) {
