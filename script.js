@@ -9,7 +9,7 @@ let currencies;
 let currencyPLN;
 
 resultValue.innerHTML = ' XXX PLN';
-
+//FETCH DATA
 function getCurrencies() {
   fetch('https://api.nbp.pl/api/exchangerates/tables/A/')
     .then((response) => response.json())
