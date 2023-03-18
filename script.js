@@ -92,6 +92,8 @@ const editItem = (item, text, listItem) => {
     const valueInput = document.createElement('input');
     valueInput.setAttribute('type', 'number');
     valueInput.setAttribute('min', 1);
+    valueInput.setAttribute('required', '');
+    titleInput.setAttribute('required', '');
     titleInput.value = item.title;
     valueInput.value = item.amount;
     const saveBtn = document.createElement('input');
